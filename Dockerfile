@@ -21,14 +21,16 @@ RUN groupadd -r mongodb && useradd -r -g mongodb mongodb \
 	&& rm -rf /var/lib/mongodb \
 	&& mv /etc/mongod.conf /etc/mongod.conf.orig \
   && mkdir -p /data/db /data/configdb \
-	&& chown -R mongodb:mongodb /data/db /data/configdb
+	&& chown -R mongodb:mongodb /data/db /data/configdb \
+  && mkdir -p /entry
 
 VOLUME /data/db /data/configdb
 
-COPY docker-entrypoint.sh /data/entrypoint.sh
+COPY docker-entrypoint.sh /entry/entrypoint.sh
 COPY mongod.service /lib/systemd/system/mongod.service
 
-ENTRYPOINT ["/data/entrypoint.sh"]
+ENTRYPOINT ["/entry/entrypoint.sh"]
+RUN chmod +x /entry/entrypoint.sh
 
 EXPOSE 27017
 CMD ["mongod"]

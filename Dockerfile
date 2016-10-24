@@ -32,5 +32,4 @@ COPY mongod.service /lib/systemd/system/mongod.service
 ENTRYPOINT ["/entry/entrypoint.sh"]
 RUN chmod +x /entry/entrypoint.sh
 
-EXPOSE 27017
 CMD ["mongod"]

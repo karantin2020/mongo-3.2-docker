@@ -44,6 +44,8 @@ VOLUME /data/db /data/configdb
 COPY docker-entrypoint.sh /entry/entrypoint.sh
 COPY mongod.service /lib/systemd/system/mongod.service
 
+EXPOSE 27017
+
 ENTRYPOINT ["/entry/entrypoint.sh"]
 RUN chmod +x /entry/entrypoint.sh
 

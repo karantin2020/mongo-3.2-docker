@@ -3,6 +3,9 @@ FROM ubuntu:xenial
 ENV MONGO_MAJOR 3.2
 ENV MONGO_VERSION 3.2.10
 
+COPY docker-entrypoint.sh /entrypoint.sh
+COPY mongod.service /lib/systemd/system/mongod.service
+
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb \
   && apt-get update \
@@ -25,8 +28,6 @@ RUN groupadd -r mongodb && useradd -r -g mongodb mongodb \
 
 VOLUME /data/db /data/configdb
 
-COPY docker-entrypoint.sh /entrypoint.sh
-COPY mongod.service /lib/systemd/system/mongod.service
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 27017
